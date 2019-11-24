@@ -46,6 +46,8 @@ extern "C"
 #define SPACE_MOVE 15
 #define CHAR_SIZE 50
 
+// #define LIFE_COUNT 3
+
 //#define WINDOW_HEIGHT 800 
 //#define WINDOW_WIDTH 800 
 #define MAX_ITERATIONS 100
@@ -357,6 +359,7 @@ int main()
 //	ObjStruct Bullet = {"BULLET", 325,325,3,0};
 	size_t n = 2.5;
 	n += 35.34;
+	int LIFE_COUNT = 4;
 	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
@@ -404,21 +407,32 @@ int main()
 				AlienBullet3 = {"ALIEN_B",Alien3.getX(),Alien3.getY(),50,0};
 					AlienBullet3.updateObject();
 			}
-			if( !Alien._Life && !Alien2._Life && !Alien3._Life )
+			if( !Alien._Life && !Alien2._Life && !Alien3._Life && Player._Life)
 			{
 				char winner[10] = "WINNER";
 				gfx_color(23,500,200);
 				drawString(150,200,winner);
 			}
-			if( Player.isDead(AlienBullet))
+			Player.isDead(AlienBullet);
+			Player.isDead(AlienBullet2);
+			Player.isDead(AlienBullet3);
+			
+			if(!Player._Life)
 			{
-				char loser[10] = "LOSER";
-				gfx_color(23,500,200);
-				drawString(150,200,loser);
-				usleep(1000000);
-				//if (button == 'x' || button == 'q')
-				//		break;
+				LIFE_COUNT --;
+				if(LIFE_COUNT == 0)
+				{
+					char loser[10] = "LOSER";
+					gfx_color(23,500,200);
+					drawString(150,200,loser);
+					if (button == 'x' || button == 'q')
+							break;
+			
+				}
+				else 
+					Player._Life = true;
 			}
+			
 				
 		}
 	}
