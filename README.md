@@ -1,4 +1,5 @@
 # SpaceInvaders
 ECE 231 SpaceInvaders
 
-PIC
+<p align="center">
+  <img width="500" height="500" src="SpaceInvaders">
