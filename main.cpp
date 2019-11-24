@@ -46,10 +46,15 @@ extern "C"
 #define SPACE_MOVE 15
 #define CHAR_SIZE 50
 
+//#define WINDOW_HEIGHT 800 
+//#define WINDOW_WIDTH 800 
+#define MAX_ITERATIONS 100
+
 bool debug = false;
 void openGraphics();
 void drawString(int x, int y, const std::string& str); 
 void draw_circle(int xc, int yc, int radius);
+void DrawMandelbrot();
 
 class ObjStruct
 {
@@ -99,6 +104,7 @@ class ObjStruct
 		}
 		if(_Name == "BULLET")
 		{
+			_Y -= 15;
 			ds_Square(_X,_Y,1);
 			ds_Square(_X,_Y,2);
 			ds_Square(_X,_Y,3);
@@ -231,9 +237,9 @@ class ObjStruct
 };
 
 ObjStruct Player = {"PLAYER", 325,550,50,0};
-ObjStruct Bullet = {"BULLET", 325,560,3,0};
+ObjStruct Bullet = {"BULLET", 325,562,3,0};
 ObjStruct Alien = {"ALIEN", 325,100,20,0};
-ObjStruct Alien2 = {"ALIEN", 100,100,20,0};
+ObjStruct Alien2 = {"ALIEN", 225,100,20,0};
 ObjStruct Alien3 = {"ALIEN", 425,100,20,0};
 
 void draw_polygon(int *x, int *y, int n, bool closed = false)
@@ -279,7 +285,38 @@ bool isDead(class ObjStruct& Obj, class ObjStruct& Bullet)
 	return false;
 }
 
+void drawString(int x, int y, char str[]) 
+{
+        int width = 50;
+
+        // shadowing the outer x
+        int locx = x;
+        for ( int n = 0; str[n] != 0; n++) 
+	{
+		dc_drawCharacter(locx, y, str[n]);
+                locx += width;
+                locx += width / 5;
+        }
+}
+
 void drawGameMenu()
+{
+	DrawMandelbrot();
+	char space[14] = "SPACE";
+	gfx_color(250,250,250);
+	drawString(150,200,space);	
+
+	char invaders[14] = "IVADERS";
+	gfx_color(250,250,250);
+	drawString(150,350,invaders);	
+
+	gfx_color(250, 250, 250);
+	ds_Square(CENTER_X,CENTER_Y,625);
+	gfx_color(250, 250, 250);
+	ds_Square(CENTER_X,CENTER_Y,594);
+}
+
+void showGame()
 {
 	gfx_color(250, 250, 250);
 	ds_Square(CENTER_X,CENTER_Y,625);
@@ -287,21 +324,14 @@ void drawGameMenu()
 	ds_Square(CENTER_X,CENTER_Y,594);
 }
 
-void drawString(int x, int y, const std::string& str) 
+bool GameOver()
 {
-        int width = 50;
-
-        // shadowing the outer x
-        int locx = x;
-
-        for ( int i = 0; str[i] != 0; i++) 
-	{
-                dc_drawCharacter(locx, y, str[i]);
-                locx += width;
-                locx += width / 5;
-        }
+	if( Alien._Life || Alien2._Life || Alien3._Life )
+		return false;
+	char test[10] = "WINNER";
+	drawString(CENTER_X,CENTER_Y,test);
+	return true;
 }
-
 
 /*
    =============
@@ -318,37 +348,72 @@ int main()
 	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
+
 	while(true)
 	{
-		drawGameMenu();
+		showGame();	
+	//	drawGameMenu();
 		if (gfx_event_waiting())
 		{
-				
 			Player.updateObject();
 	                int button = gfx_wait();
 			std::cout << button << std::endl;
                         // up arrow
-                        if (button == 82 || button == 65362) Player.MoveUp();// Player.updateObject(); WORKS
+                        if (button == 82 || button == 65362) Player.MoveUp();// Player.updateObject(); 
                         // down arrow
                         if (button == 84 || button == 65364) Player.MoveDown();// Player.updateObject();
                         // left arroow
                         if (button == 81 || button == 65361) Player.MoveLeft();// Player.updateObject();
                         // right arroow
-			if (button == 83 || button == 65363) Player.MoveRight();// Player.updateObject(); WORKS
+			if (button == 83 || button == 65363) Player.MoveRight();// Player.updateObject(); 
 			// Spacebar 
 			if (button == 32 || button == 65363) 
 			Bullet = {"BULLET",Player.getX(),Player.getY(),50,0};
-				Bullet.MoveUp();
+				Bullet.updateObject();
 			if(!Alien.isDead(Bullet))
 				Alien.updateObject();
 			if(!Alien2.isDead(Bullet))
 				Alien2.updateObject();
-			
+			if(!Alien3.isDead(Bullet))
+				Alien3.updateObject();
+			if( !Alien._Life && !Alien2._Life && !Alien3._Life )
+			{
+				char test[10] = "WINNER";
+				gfx_color(23,500,200);
+				drawString(150,200,test);
+			}
+				
 		}
 	}
+
 }
 
 void openGraphics()
 {
 	gfx_open(WINDOW_WIDTH, WINDOW_HEIGHT, " Space Invaders ");
+}
+
+void DrawMandelbrot()
+{
+	for (int x = 0; x < WINDOW_WIDTH; x ++) 
+	{ 
+		for(int y = 0; y < WINDOW_HEIGHT; y++) 
+		{ 
+			int n = 0; int z = 0; double a = 0; double b = 0; 
+			a = ((x - 400) * .005); b = ((y - 400) * .005); 
+			double ca = a; double cb = b; 
+			while (n < MAX_ITERATIONS) 
+			{ 
+				double aa = (a*a) - (b*b); 
+				double bb = 2*a*b; a = aa + ca; 
+				b = bb + cb; 
+				if (abs(a+b) > 16.0) 
+				{ break; } 
+				n++; 
+			} 
+			double red = n*n*n % 255; double green = (n * 3/2) % 256;    // change color 
+			double blue = n / 2 % 255; 
+			gfx_color(red, green, blue); gfx_point(x,y); 
+		} 
+	}
 }

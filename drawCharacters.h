@@ -20,7 +20,7 @@
 	y: y position
 	str: string to draw on screen
 */
-void dc_drawString(int x, int y, char *str);
+void dc_drawString(int x, int y, char* str);
 
 /*
 	dc_drawCharacter
