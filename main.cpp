@@ -369,14 +369,6 @@ int main()
 		{
 			Player.updateObject();
 	                int button = gfx_wait();
-			if(Player.isDead(AlienBullet))
-			{
-				char loser[10] = "LOSER";
-				drawString(150,200,loser);
-				usleep(10000);
-				if (button == 'x' || button == 'q')
-						break;
-			}
 			
 			std::cout << button << std::endl;
                         // up arrow
@@ -417,6 +409,15 @@ int main()
 				char winner[10] = "WINNER";
 				gfx_color(23,500,200);
 				drawString(150,200,winner);
+			}
+			if( Player.isDead(AlienBullet))
+			{
+				char loser[10] = "LOSER";
+				gfx_color(23,500,200);
+				drawString(150,200,loser);
+				usleep(1000000);
+				//if (button == 'x' || button == 'q')
+				//		break;
 			}
 				
 		}
