@@ -102,9 +102,18 @@ class ObjStruct
 			ds_TriangleAngle(_X,_Y,CHAR_SIZE-3,390);
 
 		}
+		if(_Name == "ALIEN_B")
+		{
+			_Y +=15;
+			ds_Square(_X,_Y,1);
+			ds_Square(_X,_Y,2);
+			ds_Square(_X,_Y,3);
+			ds_Square(_X,_Y,4);
+			ds_Square(_X,_Y,5);
+		}
 		if(_Name == "BULLET")
 		{
-			_Y -= 15;
+			_Y -=15;
 			ds_Square(_X,_Y,1);
 			ds_Square(_X,_Y,2);
 			ds_Square(_X,_Y,3);
@@ -241,6 +250,9 @@ ObjStruct Bullet = {"BULLET", 325,562,3,0};
 ObjStruct Alien = {"ALIEN", 325,100,20,0};
 ObjStruct Alien2 = {"ALIEN", 225,100,20,0};
 ObjStruct Alien3 = {"ALIEN", 425,100,20,0};
+ObjStruct AlienBullet = {"ALIEN_B",0,0,50,0};
+ObjStruct AlienBullet2 = {"ALIEN_B",0,0,50,0};
+ObjStruct AlienBullet3 = {"ALIEN_B",0,0,50,0};
 
 void draw_polygon(int *x, int *y, int n, bool closed = false)
 {
@@ -357,6 +369,15 @@ int main()
 		{
 			Player.updateObject();
 	                int button = gfx_wait();
+			if(Player.isDead(AlienBullet))
+			{
+				char loser[10] = "LOSER";
+				drawString(150,200,loser);
+				usleep(10000);
+				if (button == 'x' || button == 'q')
+						break;
+			}
+			
 			std::cout << button << std::endl;
                         // up arrow
                         if (button == 82 || button == 65362) Player.MoveUp();// Player.updateObject(); 
@@ -371,16 +392,31 @@ int main()
 			Bullet = {"BULLET",Player.getX(),Player.getY(),50,0};
 				Bullet.updateObject();
 			if(!Alien.isDead(Bullet))
+			{
 				Alien.updateObject();
+				if (button == 32 && Alien._Life) 
+				AlienBullet = {"ALIEN_B",Alien.getX(),Alien.getY(),50,0};
+					AlienBullet.updateObject();
+			}
 			if(!Alien2.isDead(Bullet))
+			{
 				Alien2.updateObject();
+				if (button == 32 && Alien2._Life) 
+				AlienBullet2 = {"ALIEN_B",Alien2.getX(),Alien2.getY(),50,0};
+					AlienBullet2.updateObject();
+			}
 			if(!Alien3.isDead(Bullet))
+			{
 				Alien3.updateObject();
+				if (button == 32 && Alien3._Life) 
+				AlienBullet3 = {"ALIEN_B",Alien3.getX(),Alien3.getY(),50,0};
+					AlienBullet3.updateObject();
+			}
 			if( !Alien._Life && !Alien2._Life && !Alien3._Life )
 			{
-				char test[10] = "WINNER";
+				char winner[10] = "WINNER";
 				gfx_color(23,500,200);
-				drawString(150,200,test);
+				drawString(150,200,winner);
 			}
 				
 		}
