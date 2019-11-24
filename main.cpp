@@ -34,15 +34,16 @@ extern "C"
 #define CENTER_X 325
 #define CENTER_Y 325
 
-#define MIN_GRID_WIDTH 50   //Including boundary walls.
-#define MIN_GRID_HEIGHT 50  //Including boundary walls.
-#define MAX_GRID_WIDTH 600  //Including boundary walls.
+// NEEDS Work
+#define MIN_GRID_WIDTH 50   //Including boundary walls.okay
+#define MIN_GRID_HEIGHT 54  //Including boundary walls.
+#define MAX_GRID_WIDTH 600  //Including boundary walls.okay
 #define MAX_GRID_HEIGHT 600  //Including boundray walls.
 
 #define WINDOW_HEIGHT 650
 #define WINDOW_WIDTH 650
 
-#define SPACE_MOVE 20
+#define SPACE_MOVE 15
 #define CHAR_SIZE 50
 
 bool debug = false;
@@ -70,6 +71,13 @@ class ObjStruct
 		_T = t;
 		_Life = true;
 	}
+	// MUST ADD!
+/*
+	~ObjStruct()
+	{
+		
+	}
+*/
 	// updates Onject by redrawing said object
 	void updateObject()
 	{
@@ -143,7 +151,7 @@ class ObjStruct
 			return false;
 		return true;
 	}
-
+	
 	void MoveDown()
 	{
 		if( inRange(_Y + SPACE_MOVE) )
@@ -156,6 +164,13 @@ class ObjStruct
 	{
 		if( inRange(_Y - SPACE_MOVE) )
 		{
+			if(_Name == "PLAYER")
+			{
+				if(_Y  < 400)
+				{
+					return;
+				}
+			}
 			_Y -= SPACE_MOVE;
 			updateObject();
 		}
@@ -216,8 +231,10 @@ class ObjStruct
 };
 
 ObjStruct Player = {"PLAYER", 325,550,50,0};
-ObjStruct Bullet = {"BULLET", 325,325,3,0};
+ObjStruct Bullet = {"BULLET", 325,560,3,0};
 ObjStruct Alien = {"ALIEN", 325,100,20,0};
+ObjStruct Alien2 = {"ALIEN", 100,100,20,0};
+ObjStruct Alien3 = {"ALIEN", 425,100,20,0};
 
 void draw_polygon(int *x, int *y, int n, bool closed = false)
 {
@@ -322,8 +339,10 @@ int main()
 			if (button == 32 || button == 65363) 
 			Bullet = {"BULLET",Player.getX(),Player.getY(),50,0};
 				Bullet.MoveUp();
-			Alien.isDead(Bullet);
-			Alien.updateObject();
+			if(!Alien.isDead(Bullet))
+				Alien.updateObject();
+			if(!Alien2.isDead(Bullet))
+				Alien2.updateObject();
 			
 		}
 	}
