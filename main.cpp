@@ -59,6 +59,7 @@ class ObjStruct
 	size_t _T; // Theta
 
 	public:
+	bool _Life;
 
 	ObjStruct( std::string name, size_t x, size_t y, size_t h, size_t t )
 	{
@@ -67,10 +68,16 @@ class ObjStruct
 		_Y = y;
 		_H = h;
 		_T = t;
+		_Life = true;
 	}
 	// updates Onject by redrawing said object
 	void updateObject()
 	{
+		if(!_Life)
+		{
+			return;
+		}
+
 		if(_Name == "PLAYER")
 		{
 			gfx_clear();
@@ -84,10 +91,20 @@ class ObjStruct
 		}
 		if(_Name == "BULLET")
 		{
-			ds_Square(_X,_Y,9);
+			ds_Square(_X,_Y,1);
+			ds_Square(_X,_Y,2);
+			ds_Square(_X,_Y,3);
+			ds_Square(_X,_Y,4);
+			ds_Square(_X,_Y,5);
 		}
 		if(_Name == "ALIEN")
 		{
+			if(!_Life)
+			{
+				clear();
+				return;
+			}
+
 			_T +=15;
 			_X +=15;
 			if(!inRange(_X))
@@ -168,6 +185,34 @@ class ObjStruct
 	{
 		return _Y;
 	}
+
+	void clear()
+	{
+		gfx_clear();
+	}
+
+	bool isDead(class ObjStruct& Bullet)
+	{
+		size_t BulletMin_X = Bullet.getX() - 2;
+		size_t BulletMax_X = Bullet.getX() + 2;
+		size_t BulletMin_Y = Bullet.getY() - 2;
+		size_t BulletMax_Y = Bullet.getY() + 2;
+		
+		size_t ObjMin_X = _X - 20;
+		size_t ObjMax_X = _X + 20;
+		size_t ObjMin_Y = _Y - 20;
+		size_t ObjMax_Y = _Y + 20;
+
+		if( BulletMin_X > ObjMin_X && BulletMin_X < ObjMax_X && BulletMax_X < ObjMax_X && BulletMax_X > ObjMin_X &&
+	   	    BulletMin_Y > ObjMin_Y && BulletMin_Y < ObjMax_Y && BulletMax_Y < ObjMax_Y && BulletMax_Y > ObjMin_Y)
+		{
+			std::cout << " I'M DEAD :  " << _Name <<  std::endl;
+			_Life = false;
+			return true;
+		}
+		return false;
+	}
+
 };
 
 ObjStruct Player = {"PLAYER", 325,550,50,0};
@@ -195,16 +240,33 @@ void draw_circle(int xc, int yc, int radius)
 	draw_polygon(x, y, 18, true);
 }
 
-/*
-bool isDead()
+bool isDead(class ObjStruct& Obj, class ObjStruct& Bullet)
 {
+	size_t BulletMin_X = Bullet.getX() - 2;
+	size_t BulletMax_X = Bullet.getX() + 2;
+	size_t BulletMin_Y = Bullet.getY() - 2;
+	size_t BulletMax_Y = Bullet.getY() + 2;
 	
+	size_t ObjMin_X = Obj.getX() - 20;
+	size_t ObjMax_X = Obj.getX() + 20;
+	size_t ObjMin_Y = Obj.getY() - 20;
+	size_t ObjMax_Y = Obj.getY() + 20;
+
+	if( BulletMin_X > ObjMin_X && BulletMin_X < ObjMax_X && BulletMax_X < ObjMax_X && BulletMax_X > ObjMin_X &&
+   	    BulletMin_Y > ObjMin_Y && BulletMin_Y < ObjMax_Y && BulletMax_Y < ObjMax_Y && BulletMax_Y > ObjMin_Y)
+	{
+		std::cout << " I'M DEAD " << std::endl;
+		Obj._Life = false;
+		return true;
+	}
+	return false;
 }
-*/
 
 void drawGameMenu()
 {
+	gfx_color(250, 250, 250);
 	ds_Square(CENTER_X,CENTER_Y,625);
+	gfx_color(250, 250, 250);
 	ds_Square(CENTER_X,CENTER_Y,594);
 }
 
@@ -234,6 +296,9 @@ int main()
 {
 //	ObjStruct Player = {"PLAYER", 325,325,50,0};
 //	ObjStruct Bullet = {"BULLET", 325,325,3,0};
+	size_t n = 2.5;
+	n += 35.34;
+	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
 	while(true)
@@ -241,7 +306,7 @@ int main()
 		drawGameMenu();
 		if (gfx_event_waiting())
 		{
-		
+				
 			Player.updateObject();
 	                int button = gfx_wait();
 			std::cout << button << std::endl;
@@ -257,7 +322,9 @@ int main()
 			if (button == 32 || button == 65363) 
 			Bullet = {"BULLET",Player.getX(),Player.getY(),50,0};
 				Bullet.MoveUp();
+			Alien.isDead(Bullet);
 			Alien.updateObject();
+			
 		}
 	}
 }
