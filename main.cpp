@@ -320,7 +320,7 @@ void drawGameMenu()
 	gfx_color(250,250,250);
 	drawString(150,200,space);	
 
-	char invaders[14] = "IVADERS";
+	char invaders[14] = "INVADERS";
 	gfx_color(250,250,250);
 	drawString(150,350,invaders);	
 
