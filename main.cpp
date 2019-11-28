@@ -6,7 +6,7 @@
  *
 * */
 
-
+#include <vector>
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -68,6 +68,10 @@ class ObjStruct
 
 	public:
 	bool _Life;
+	ObjStruct()
+	{
+		_Life = true;
+	}
 
 	ObjStruct( std::string name, size_t x, size_t y, size_t h, size_t t )
 	{
@@ -88,6 +92,15 @@ class ObjStruct
 	// updates Onject by redrawing said object
 	void updateObject()
 	{
+		if(_Name == "BULLET")
+		{
+			_Y -=15;
+			ds_Square(_X,_Y,1);
+			ds_Square(_X,_Y,2);
+			ds_Square(_X,_Y,3);
+			ds_Square(_X,_Y,4);
+			ds_Square(_X,_Y,5);
+		}
 		if(!_Life)
 		{
 			return;
@@ -107,15 +120,6 @@ class ObjStruct
 		if(_Name == "ALIEN_B")
 		{
 			_Y +=15;
-			ds_Square(_X,_Y,1);
-			ds_Square(_X,_Y,2);
-			ds_Square(_X,_Y,3);
-			ds_Square(_X,_Y,4);
-			ds_Square(_X,_Y,5);
-		}
-		if(_Name == "BULLET")
-		{
-			_Y -=15;
 			ds_Square(_X,_Y,1);
 			ds_Square(_X,_Y,2);
 			ds_Square(_X,_Y,3);
@@ -183,7 +187,7 @@ class ObjStruct
 		{
 			if(_Name == "PLAYER")
 			{
-				if(_Y  < 400)
+				if(_Y  < 200)
 				{
 					return;
 				}
@@ -357,15 +361,82 @@ int main()
 {
 //	ObjStruct Player = {"PLAYER", 325,325,50,0};
 //	ObjStruct Bullet = {"BULLET", 325,325,3,0};
+//
+
+	std::vector<ObjStruct> Aliens(100);
+	ObjStruct Alien = {"ALIEN", WINDOW_WIDTH/2,100,20,0};
+	ObjStruct Alien2 = {"ALIEN", WINDOW_WIDTH/2 + 75,100,20,0};
+	ObjStruct Alien3 = {"ALIEN", WINDOW_WIDTH/2 - 75,100,20,0};
+	
+	ObjStruct Alien4 = {"ALIEN", WINDOW_WIDTH/2 + 75*2,100,20,0};
+	ObjStruct Alien5 = {"ALIEN", WINDOW_WIDTH/2 - 75*2,100,20,0};
+	
+	ObjStruct Alien6 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,100,20,0};
+	ObjStruct Alien7 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,100,20,0};
+	
+	
+
+
+	std::vector<ObjStruct> Bullets02(100);
+	ObjStruct Bullet1 = {"BULLET", 5,6,7,0};
+	ObjStruct Bullet2 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet3 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet4 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet5 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet6 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet7 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet8 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet9 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet10 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet11 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet12 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet13 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet14 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet15 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet16 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet17 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet18 = {"BULLET", 0,0,0,0};
+	ObjStruct Bullet19 = {"BULLET", 0,0,0,0};
+
+	Bullets02.push_back(Bullet1);
+	Bullets02.push_back(Bullet2);
+	Bullets02.push_back(Bullet3);
+	Bullets02.push_back(Bullet4);
+	Bullets02.push_back(Bullet5);
+	Bullets02.push_back(Bullet6);
+	Bullets02.push_back(Bullet7);
+	Bullets02.push_back(Bullet8);
+	Bullets02.push_back(Bullet9);
+	Bullets02.push_back(Bullet10);
+	Bullets02.push_back(Bullet11);
+	Bullets02.push_back(Bullet12);
+	Bullets02.push_back(Bullet13);
+	Bullets02.push_back(Bullet14);
+	Bullets02.push_back(Bullet15);
+	Bullets02.push_back(Bullet16);
+	Bullets02.push_back(Bullet17);
+	Bullets02.push_back(Bullet18);
+	Bullets02.push_back(Bullet19);
+
 	size_t n = 2.5;
 	n += 35.34;
+	int BulletNum = 0;
 	int LIFE_COUNT = 4;
 	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
-
+	int Count = 0;
+	Alien.DrawAlien();
+	Alien2.DrawAlien();
+	Alien3.DrawAlien();
+	Alien4.DrawAlien();
+	Alien5.DrawAlien();
+	Alien6.DrawAlien();
+	Alien7.DrawAlien();
 	while(true)
 	{
+		if(BulletNum == 19)
+			BulletNum = 0;
 		showGame();	
 	//	drawGameMenu();
 		if (gfx_event_waiting())
@@ -384,26 +455,49 @@ int main()
 			if (button == 83 || button == 65363) Player.MoveRight();// Player.updateObject(); 
 			// Spacebar 
 			if (button == 32 || button == 65363) 
-			Bullet = {"BULLET",Player.getX(),Player.getY(),50,0};
-				Bullet.updateObject();
+			{
+				Bullets02[BulletNum] = {"BULLET",Player.getX(),Player.getY(),50,0};
+				BulletNum ++;
+			}
+			Bullets02[BulletNum-10].MoveUp();
+			Bullets02[BulletNum-9].MoveUp();
+			Bullets02[BulletNum-8].MoveUp();
+			Bullets02[BulletNum-7].MoveUp();
+			Bullets02[BulletNum-6].MoveUp();
+			Bullets02[BulletNum-5].MoveUp();
+			Bullets02[BulletNum-4].MoveUp();
+			Bullets02[BulletNum-3].MoveUp();
+			Bullets02[BulletNum-2].MoveUp();
+			Bullets02[BulletNum-1].MoveUp();
+			Bullets02[BulletNum].MoveUp();
+
+			std::cout<< BulletNum << std::endl;
+			
+			for(int num = 0; num < Bullets02.size(); num++)
+				Alien.isDead(Bullets02[num]);
+			for(int num = 0; num < Bullets02.size(); num++)
+				Alien2.isDead(Bullets02[num]);
+			for(int num = 0; num < Bullets02.size(); num++)
+				Alien3.isDead(Bullets02[num]);
+
 			if(!Alien.isDead(Bullet))
 			{
 				Alien.updateObject();
-				if (button == 32 && Alien._Life) 
+				if (Alien._Life && Count == 15) 
 				AlienBullet = {"ALIEN_B",Alien.getX(),Alien.getY(),50,0};
 					AlienBullet.updateObject();
 			}
 			if(!Alien2.isDead(Bullet))
 			{
 				Alien2.updateObject();
-				if (button == 32 && Alien2._Life) 
+				if (Alien2._Life && Count == 15) 
 				AlienBullet2 = {"ALIEN_B",Alien2.getX(),Alien2.getY(),50,0};
 					AlienBullet2.updateObject();
 			}
 			if(!Alien3.isDead(Bullet))
 			{
 				Alien3.updateObject();
-				if (button == 32 && Alien3._Life) 
+				if (Alien3._Life && Count == 15) 
 				AlienBullet3 = {"ALIEN_B",Alien3.getX(),Alien3.getY(),50,0};
 					AlienBullet3.updateObject();
 			}
@@ -413,6 +507,7 @@ int main()
 				gfx_color(23,500,200);
 				drawString(150,200,winner);
 			}
+
 			Player.isDead(AlienBullet);
 			Player.isDead(AlienBullet2);
 			Player.isDead(AlienBullet3);
@@ -432,7 +527,10 @@ int main()
 				else 
 					Player._Life = true;
 			}
-			
+
+			if(Count == 100)    // Alien Bullet Time
+				Count = 0;
+			Count ++;
 				
 		}
 	}
