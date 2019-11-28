@@ -3,6 +3,7 @@
  * 	By: Nigel
  *	ECE 231 c++
  *	First Written on November 16
+ *	Two Lives / 2 Bullets 
  *
 * */
 
@@ -477,7 +478,7 @@ int main()
 	size_t n = 2.5;
 	n += 35.34;
 	int BulletNum = 0;
-	int LIFE_COUNT = 3;  
+	int LIFE_COUNT = 5;  
 	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
@@ -552,6 +553,7 @@ int main()
 				AliensBullets[NUM].updateObject();
 
 			}
+
 			/*
 			for(int NUM = 0; NUM < Aliens.size() && NUM < Bullets02.size(); NUM++)
 			{
@@ -620,7 +622,7 @@ int main()
 					char loser[10] = "LOSER";
 					gfx_color(23,500,200);
 					drawString(150,200,loser);
-					int button = gfx_wait();
+					int BUTTON = gfx_wait();
 					if (button == 'x' || button == 'q')
 							break;
 					usleep(9999999); // if Player Lost He can NO longer die
