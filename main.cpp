@@ -92,6 +92,11 @@ class ObjStruct
 	// updates Onject by redrawing said object
 	void updateObject()
 	{
+		if(!_Life)  // swaped with botom if statement
+		{
+			return;
+		}
+		
 		if(_Name == "BULLET")
 		{
 			_Y -=15;
@@ -101,25 +106,16 @@ class ObjStruct
 			ds_Square(_X,_Y,4);
 			ds_Square(_X,_Y,5);
 		}
-		if(!_Life)
-		{
-			return;
-		}
 
 		if(_Name == "PLAYER")
 		{
 			gfx_clear();
-			gfx_color(250,0,250);
-			ds_Triangle(_X,_Y,CHAR_SIZE);
-			gfx_color(0,250,255);
-			ds_TriangleAngle(_X,_Y,CHAR_SIZE-3,-390);
-			gfx_color(0,250,255);
-			ds_TriangleAngle(_X,_Y,CHAR_SIZE-3,390);
-
+			DrawPLayer();
 		}
 		if(_Name == "ALIEN_B")
 		{
 			_Y +=15;
+			gfx_color(255,100,0);
 			ds_Square(_X,_Y,1);
 			ds_Square(_X,_Y,2);
 			ds_Square(_X,_Y,3);
@@ -134,20 +130,55 @@ class ObjStruct
 				return;
 			}
 
-			_T +=15;
+			//_T +=15;
 			_X +=15;
 			if(!inRange(_X))
 			{
 				_X = 55;
 			}
-			ds_SquareAngle(_X,_Y,_H + 30,_T);
+			//ds_SquareAngle(_X,_Y,_H + 30,_T);
 			DrawAlien();
 		}
 	}
 
-	void DrawPLayer(int x, int y) // use this to initially draw PLAYER
+	void DrawPLayer() // use this to initially draw PLAYER
 	{
-		ds_Triangle(x,y,CHAR_SIZE);
+			gfx_color(0,250,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-3,-390);
+			gfx_color(0,250,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-15.6,-390);
+			gfx_color(0,250,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-15.6*2,-390);
+			
+			gfx_color(0,255,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-3,390);
+			gfx_color(0,255,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-15.6,390);
+			gfx_color(0,255,255);
+			ds_TriangleAngle(_X,_Y,CHAR_SIZE-15.6*2,390);
+			
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE);
+			
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5);
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*2);
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*3);
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*4);
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*5);
+			gfx_color(250,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*6);
+			gfx_color(250,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*7);
+			gfx_color(255,0,0);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*8);
+			gfx_color(0,255,255);
+			ds_Triangle(_X,_Y,CHAR_SIZE - 5*9);
+			
 	}
 	
 	void DrawAlien() // use this to initially draw ALIEN
@@ -187,7 +218,7 @@ class ObjStruct
 		{
 			if(_Name == "PLAYER")
 			{
-				if(_Y  < 200)
+				if(_Y  < 580)
 				{
 					return;
 				}
@@ -305,7 +336,7 @@ bool isDead(class ObjStruct& Obj, class ObjStruct& Bullet)
 
 void drawString(int x, int y, char str[]) 
 {
-        int width = 50;
+        int width = 50;  // WINNER, LOSER, NAME
 
         // shadowing the outer x
         int locx = x;
@@ -337,7 +368,7 @@ void drawGameMenu()
 void showGame()
 {
 	gfx_color(250, 250, 250);
-	ds_Square(CENTER_X,CENTER_Y,625);
+	ds_Square(CENTER_X,CENTER_Y,635);
 	gfx_color(250, 250, 250);
 	ds_Square(CENTER_X,CENTER_Y,594);
 }
@@ -363,6 +394,25 @@ int main()
 //	ObjStruct Bullet = {"BULLET", 325,325,3,0};
 //
 
+	std::vector<ObjStruct> AliensBullets(100);
+	ObjStruct AlienBullet = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet1 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet2 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet3 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet4 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet5 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet6 = {"ALIEN_B",0,0,50,0};
+	ObjStruct AlienBullet7 = {"ALIEN_B",0,0,50,0};
+	
+	AliensBullets.push_back(AlienBullet);
+	AliensBullets.push_back(AlienBullet1);
+	AliensBullets.push_back(AlienBullet2);
+	AliensBullets.push_back(AlienBullet3);
+	AliensBullets.push_back(AlienBullet4);
+	AliensBullets.push_back(AlienBullet5);
+	AliensBullets.push_back(AlienBullet6);
+	AliensBullets.push_back(AlienBullet7);
+
 	std::vector<ObjStruct> Aliens(100);
 	ObjStruct Alien = {"ALIEN", WINDOW_WIDTH/2,100,20,0};
 	ObjStruct Alien2 = {"ALIEN", WINDOW_WIDTH/2 + 75,100,20,0};
@@ -374,7 +424,13 @@ int main()
 	ObjStruct Alien6 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,100,20,0};
 	ObjStruct Alien7 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,100,20,0};
 	
-	
+	Aliens.push_back(Alien);
+	Aliens.push_back(Alien2);
+	Aliens.push_back(Alien3);
+	Aliens.push_back(Alien4);
+	Aliens.push_back(Alien5);
+	Aliens.push_back(Alien6);
+	Aliens.push_back(Alien7);
 
 
 	std::vector<ObjStruct> Bullets02(100);
@@ -421,11 +477,12 @@ int main()
 	size_t n = 2.5;
 	n += 35.34;
 	int BulletNum = 0;
-	int LIFE_COUNT = 4;
+	int LIFE_COUNT = 3;  
 	std::cout << n << std::endl;
 	openGraphics();
 	drawGameMenu();
 	int Count = 0;
+
 	Alien.DrawAlien();
 	Alien2.DrawAlien();
 	Alien3.DrawAlien();
@@ -433,6 +490,7 @@ int main()
 	Alien5.DrawAlien();
 	Alien6.DrawAlien();
 	Alien7.DrawAlien();
+
 	while(true)
 	{
 		if(BulletNum == 19)
@@ -459,14 +517,14 @@ int main()
 				Bullets02[BulletNum] = {"BULLET",Player.getX(),Player.getY(),50,0};
 				BulletNum ++;
 			}
-			Bullets02[BulletNum-10].MoveUp();
-			Bullets02[BulletNum-9].MoveUp();
-			Bullets02[BulletNum-8].MoveUp();
-			Bullets02[BulletNum-7].MoveUp();
-			Bullets02[BulletNum-6].MoveUp();
-			Bullets02[BulletNum-5].MoveUp();
-			Bullets02[BulletNum-4].MoveUp();
-			Bullets02[BulletNum-3].MoveUp();
+			//Bullets02[BulletNum-10].MoveUp();
+			//Bullets02[BulletNum-9].MoveUp();
+			//Bullets02[BulletNum-8].MoveUp();
+			//Bullets02[BulletNum-7].MoveUp();
+			//Bullets02[BulletNum-6].MoveUp();
+			//Bullets02[BulletNum-5].MoveUp();
+			//Bullets02[BulletNum-4].MoveUp();  // controll NUMBER of BUllets that player has.
+			//Bullets02[BulletNum-3].MoveUp();
 			Bullets02[BulletNum-2].MoveUp();
 			Bullets02[BulletNum-1].MoveUp();
 			Bullets02[BulletNum].MoveUp();
@@ -479,7 +537,33 @@ int main()
 				Alien2.isDead(Bullets02[num]);
 			for(int num = 0; num < Bullets02.size(); num++)
 				Alien3.isDead(Bullets02[num]);
+		
+			// Collision Detection and Alien Movement 
+			for(int NUM = 0; NUM < Aliens.size(); NUM++)
+			{
+				Aliens[NUM].updateObject();
+				if(Aliens[NUM]._Life && Count == 5)
+					AliensBullets[NUM] = {"ALIEN_B",Aliens[NUM].getX(),Aliens[NUM].getY(),50,0};
+				for(int SEC = 0; SEC < Bullets02.size(); SEC++)
+				{
+					Aliens[NUM].isDead(Bullets02[SEC]);	
+					// should delete the bullet if it hits its target add later no
+				}	
+				AliensBullets[NUM].updateObject();
 
+			}
+			/*
+			for(int NUM = 0; NUM < Aliens.size() && NUM < Bullets02.size(); NUM++)
+			{
+				for(int SEC = 0; SEC < Bullets02.size(); SEC++)
+				{
+					Aliens[NUM].isDead(Bullets02[SEC]);
+				}
+			}
+			*/
+			
+
+			/*
 			if(!Alien.isDead(Bullet))
 			{
 				Alien.updateObject();
@@ -501,17 +585,33 @@ int main()
 				AlienBullet3 = {"ALIEN_B",Alien3.getX(),Alien3.getY(),50,0};
 					AlienBullet3.updateObject();
 			}
-			if( !Alien._Life && !Alien2._Life && !Alien3._Life && Player._Life)
+			*/
+			int AllDead_Y_N = 0;
+			for(int NUM = 0; NUM < Aliens.size(); NUM ++)
 			{
-				char winner[10] = "WINNER";
-				gfx_color(23,500,200);
-				drawString(150,200,winner);
+				if(!Aliens[NUM]._Life)
+				{
+					AllDead_Y_N ++;
+					std::cout << "    " <<  AllDead_Y_N << " NUM of dead Aliens " <<std::endl;
+					if(AllDead_Y_N == 7)  // 7 is the number of Aliens Size is 107.
+					{
+						char winner[10] = "WINNER";
+						gfx_color(23,500,200);
+						drawString(150,200,winner);
+					}
+				}
+			}
+			
+			for(int NUM = 0; NUM < AliensBullets.size(); NUM++)
+			{
+				Player.isDead(AliensBullets[NUM]);
 			}
 
+			/*
 			Player.isDead(AlienBullet);
 			Player.isDead(AlienBullet2);
 			Player.isDead(AlienBullet3);
-			
+			*/
 			if(!Player._Life)
 			{
 				LIFE_COUNT --;
@@ -520,15 +620,17 @@ int main()
 					char loser[10] = "LOSER";
 					gfx_color(23,500,200);
 					drawString(150,200,loser);
+					int button = gfx_wait();
 					if (button == 'x' || button == 'q')
 							break;
+					usleep(9999999); // if Player Lost He can NO longer die
 			
 				}
 				else 
 					Player._Life = true;
 			}
 
-			if(Count == 100)    // Alien Bullet Time
+			if(Count == 32)    // Alien Bullet Time
 				Count = 0;
 			Count ++;
 				
