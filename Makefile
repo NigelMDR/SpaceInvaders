@@ -1,4 +1,4 @@
-CXXFLAGS=-g
+CXXFLAGS=-ggdb3
 LDLIBS=-lX11 -lstdc++ -lm
 MACF = -I/usr/X11R6/include -L/usr/X11R6/lib
 

@@ -76,6 +76,14 @@ void ds_SquareAngle(int x, int y, int len, int theta)
 	gfx_line( x - (len/2)*cos(theta), y + (len/2)*sin(theta), x + (len/2)*sin(theta), y + (len/2)*cos(theta));
 }
 
+void ds_Rectangle(int x, int y, int len, int width)
+{
+	int theta = 180;
+	gfx_line( x + (width/2), y + (len/2), x + (width/2), y - (len/2));
+	gfx_line( x + (width/2), y - (len/2), x - (width/2), y - (len/2));
+	gfx_line( x - (width/2), y - (len/2), x - (width/2), y + (len/2));
+	gfx_line( x - (width/2), y + (len/2), x + (width/2), y + (len/2));
+}
 void ds_Nonagon();
 void ds_Octagon();
 void ds_Heptagon();
