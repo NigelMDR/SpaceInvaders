@@ -25,7 +25,7 @@ class Alien
 	size_t _Y;
 	size_t _H; // length
 	size_t _T; // Theta
-
+	size_t DX = 10; //value to change direction of aleins
 	public:
 	bool _Life;
 
@@ -61,18 +61,12 @@ class Alien
 			return;
 		}
 
-		_X += 15;
 		if(!inRange(_X))
 		{
+			
 			_X = 55;
 			_Y += 15;
 		}
-/*
-		if( _Y > 700 )
-		{
-			GAME_OVER = true;
-		}
-*/
 		DrawAlien();
 		
 	}

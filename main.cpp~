@@ -70,8 +70,8 @@ bool GameOver();
 void GameInstructions();
 
 #include "Bullet.h"
-#include "Alien.h"
 #include "Player.h"
+#include "Alien.h"
 
 
 /*
@@ -93,14 +93,6 @@ int main()
 	Bullet AlienBullet5 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet6 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet7 = {"ALIEN_B",0,0,50,0};
-
-	Bullet AlienBullet8 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet9 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet10 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet11 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet12 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet13 = {"ALIEN_B",0,0,50,0};
-	Bullet AlienBullet14 = {"ALIEN_B",0,0,50,0};
 	
 	AliensBullets.push_back(AlienBullet);
 	AliensBullets.push_back(AlienBullet1);
@@ -110,14 +102,6 @@ int main()
 	AliensBullets.push_back(AlienBullet5);
 	AliensBullets.push_back(AlienBullet6);
 	AliensBullets.push_back(AlienBullet7);
-
-	AliensBullets.push_back(AlienBullet8);
-	AliensBullets.push_back(AlienBullet9);
-	AliensBullets.push_back(AlienBullet10);
-	AliensBullets.push_back(AlienBullet11);
-	AliensBullets.push_back(AlienBullet12);
-	AliensBullets.push_back(AlienBullet13);
-	AliensBullets.push_back(AlienBullet14);
 
 	std::vector<Alien> Aliens(0);
 	Alien Alien1 = {"ALIEN", WINDOW_WIDTH/2,100,20,0};
@@ -130,16 +114,6 @@ int main()
 	Alien Alien6 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,100,20,0};
 	Alien Alien7 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,100,20,0};
 	
-	Alien Alien8 = {"ALIEN", WINDOW_WIDTH/2,150,20,0};
-	Alien Alien9 = {"ALIEN", WINDOW_WIDTH/2 + 75,150,20,0};
-	Alien Alien10 = {"ALIEN", WINDOW_WIDTH/2 - 75,150,20,0};
-	
-	Alien Alien11 = {"ALIEN", WINDOW_WIDTH/2 + 75*2,150,20,0};
-	Alien Alien12= {"ALIEN", WINDOW_WIDTH/2 - 75*2,150,20,0};
-	
-	Alien Alien13 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,150,20,0};
-	Alien Alien14 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,150,20,0};
-	
 	Aliens.push_back(Alien1);
 	Aliens.push_back(Alien2);
 	Aliens.push_back(Alien3);
@@ -147,13 +121,6 @@ int main()
 	Aliens.push_back(Alien5);
 	Aliens.push_back(Alien6);
 	Aliens.push_back(Alien7);
-	Aliens.push_back(Alien8);
-	Aliens.push_back(Alien9);
-	Aliens.push_back(Alien10);
-	Aliens.push_back(Alien11);
-	Aliens.push_back(Alien12);
-	Aliens.push_back(Alien13);
-	Aliens.push_back(Alien14);
 
 	std::vector<Bullet>  Bullets02(0);
 	Bullet Bullet1 = {"BULLET", 5,6,7,0};
@@ -199,7 +166,7 @@ int main()
 	size_t n = 2.5;
 	n += 35.34;
 	int BulletNum = 0;
-	int LIFE_COUNT = 5;  
+	int LIFE_COUNT = 3;  
 	if(debug)
 		std::cout << n << std::endl;
 	//GameInstructions();
@@ -214,13 +181,6 @@ int main()
 	Alien5.DrawAlien();
 	Alien6.DrawAlien();
 	Alien7.DrawAlien();
-	Alien8.DrawAlien();
-	Alien9.DrawAlien();
-	Alien10.DrawAlien();
-	Alien11.DrawAlien();
-	Alien12.DrawAlien();
-	Alien13.DrawAlien();
-	Alien14.DrawAlien();
 	int playerOp = gfx_wait();
 		
 
@@ -309,7 +269,6 @@ int main()
 				AliensBullets[NUM].updateObject();
 
 			}
-
 			int AllDead_Y_N = 0;
 			for(int NUM = 0; NUM < Aliens.size(); NUM ++)
 			{
@@ -341,16 +300,6 @@ int main()
 			for(int NUM = 0; NUM < AliensBullets.size(); NUM++)
 			{
 				Player.isDead(AliensBullets[NUM]);
-			}
-				// Alien hits PLayer
-			for(int NUM = 0; NUM < Aliens.size(); NUM++)
-			{
-				if(Player.isDead(Aliens[NUM]))
-				{
-					LIFE_COUNT = 0;
-					if(debug)
-						std::cout << " NUM of Lives: " << LIFE_COUNT << std::endl;
-				}	
 			}
 			usleep(10);
 			if(!Player._Life)
