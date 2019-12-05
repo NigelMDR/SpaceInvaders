@@ -65,13 +65,14 @@ class Alien
 		if(!inRange(_X))
 		{
 			_X = 55;
-			_Y += 2*_H;
+			_Y += 15;
 		}
-
+/*
 		if( _Y > 700 )
 		{
 			GAME_OVER = true;
 		}
+*/
 		DrawAlien();
 		
 	}

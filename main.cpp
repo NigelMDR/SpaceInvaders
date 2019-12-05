@@ -70,8 +70,8 @@ bool GameOver();
 void GameInstructions();
 
 #include "Bullet.h"
-#include "Player.h"
 #include "Alien.h"
+#include "Player.h"
 
 
 /*
@@ -166,7 +166,7 @@ int main()
 	size_t n = 2.5;
 	n += 35.34;
 	int BulletNum = 0;
-	int LIFE_COUNT = 3;  
+	int LIFE_COUNT = 5;  
 	if(debug)
 		std::cout << n << std::endl;
 	//GameInstructions();
@@ -269,6 +269,7 @@ int main()
 				AliensBullets[NUM].updateObject();
 
 			}
+
 			int AllDead_Y_N = 0;
 			for(int NUM = 0; NUM < Aliens.size(); NUM ++)
 			{
@@ -300,6 +301,16 @@ int main()
 			for(int NUM = 0; NUM < AliensBullets.size(); NUM++)
 			{
 				Player.isDead(AliensBullets[NUM]);
+			}
+				// Alien hits PLayer
+			for(int NUM = 0; NUM < Aliens.size(); NUM++)
+			{
+				if(Player.isDead(Aliens[NUM]))
+				{
+					LIFE_COUNT = 0;
+					if(debug)
+						std::cout << " NUM of Lives: " << LIFE_COUNT << std::endl;
+				}	
 			}
 			usleep(10);
 			if(!Player._Life)

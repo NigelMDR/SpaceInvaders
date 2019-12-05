@@ -189,5 +189,28 @@ class Player
 		}
 		return false;
 	}
+	
+	bool isDead(class Alien& Bullet)
+	{
+		size_t BulletMin_X = Bullet.getX() - 20;
+		size_t BulletMax_X = Bullet.getX() + 20;
+		size_t BulletMin_Y = Bullet.getY() - 20;
+		size_t BulletMax_Y = Bullet.getY() + 20;
+		
+		size_t ObjMin_X = _X - 20;
+		size_t ObjMax_X = _X + 20;
+		size_t ObjMin_Y = _Y - 20;
+		size_t ObjMax_Y = _Y + 20;
+
+		if( BulletMin_X > ObjMin_X && BulletMin_X < ObjMax_X && BulletMax_X < ObjMax_X && BulletMax_X > ObjMin_X &&
+	   	    BulletMin_Y > ObjMin_Y && BulletMin_Y < ObjMax_Y && BulletMax_Y < ObjMax_Y && BulletMax_Y > ObjMin_Y)
+		{
+			if(debug)
+				std::cout << " I'M DEAD :  " << _Name <<  std::endl;
+			_Life = false;
+			return true;
+		}
+		return false;
+	}
 
 };
