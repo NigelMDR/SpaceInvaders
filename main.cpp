@@ -93,7 +93,7 @@ int main()
 	Bullet AlienBullet5 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet6 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet7 = {"ALIEN_B",0,0,50,0};
-
+/*
 	Bullet AlienBullet8 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet9 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet10 = {"ALIEN_B",0,0,50,0};
@@ -101,7 +101,7 @@ int main()
 	Bullet AlienBullet12 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet13 = {"ALIEN_B",0,0,50,0};
 	Bullet AlienBullet14 = {"ALIEN_B",0,0,50,0};
-	
+*/	
 	AliensBullets.push_back(AlienBullet);
 	AliensBullets.push_back(AlienBullet1);
 	AliensBullets.push_back(AlienBullet2);
@@ -110,7 +110,7 @@ int main()
 	AliensBullets.push_back(AlienBullet5);
 	AliensBullets.push_back(AlienBullet6);
 	AliensBullets.push_back(AlienBullet7);
-
+/*
 	AliensBullets.push_back(AlienBullet8);
 	AliensBullets.push_back(AlienBullet9);
 	AliensBullets.push_back(AlienBullet10);
@@ -118,7 +118,7 @@ int main()
 	AliensBullets.push_back(AlienBullet12);
 	AliensBullets.push_back(AlienBullet13);
 	AliensBullets.push_back(AlienBullet14);
-
+*/
 	std::vector<Alien> Aliens(0);
 	Alien Alien1 = {"ALIEN", WINDOW_WIDTH/2,100,20,0};
 	Alien Alien2 = {"ALIEN", WINDOW_WIDTH/2 + 75,100,20,0};
@@ -129,7 +129,7 @@ int main()
 	
 	Alien Alien6 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,100,20,0};
 	Alien Alien7 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,100,20,0};
-	
+/*	
 	Alien Alien8 = {"ALIEN", WINDOW_WIDTH/2,150,20,0};
 	Alien Alien9 = {"ALIEN", WINDOW_WIDTH/2 + 75,150,20,0};
 	Alien Alien10 = {"ALIEN", WINDOW_WIDTH/2 - 75,150,20,0};
@@ -139,7 +139,7 @@ int main()
 	
 	Alien Alien13 = {"ALIEN", WINDOW_WIDTH/2 - 75*3,150,20,0};
 	Alien Alien14 = {"ALIEN", WINDOW_WIDTH/2 + 75*3,150,20,0};
-	
+*/	
 	Aliens.push_back(Alien1);
 	Aliens.push_back(Alien2);
 	Aliens.push_back(Alien3);
@@ -147,6 +147,7 @@ int main()
 	Aliens.push_back(Alien5);
 	Aliens.push_back(Alien6);
 	Aliens.push_back(Alien7);
+/*
 	Aliens.push_back(Alien8);
 	Aliens.push_back(Alien9);
 	Aliens.push_back(Alien10);
@@ -154,7 +155,7 @@ int main()
 	Aliens.push_back(Alien12);
 	Aliens.push_back(Alien13);
 	Aliens.push_back(Alien14);
-
+*/
 	std::vector<Bullet>  Bullets02(0);
 	Bullet Bullet1 = {"BULLET", 5,6,7,0};
 	Bullet Bullet2 = {"BULLET", 0,0,0,0};
@@ -214,6 +215,7 @@ int main()
 	Alien5.DrawAlien();
 	Alien6.DrawAlien();
 	Alien7.DrawAlien();
+	/*
 	Alien8.DrawAlien();
 	Alien9.DrawAlien();
 	Alien10.DrawAlien();
@@ -221,6 +223,7 @@ int main()
 	Alien12.DrawAlien();
 	Alien13.DrawAlien();
 	Alien14.DrawAlien();
+	*/
 	int playerOp = gfx_wait();
 		
 
