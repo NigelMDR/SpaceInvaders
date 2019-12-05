@@ -53,6 +53,8 @@ extern "C"
 
 #define MAX_ITERATIONS 100
 
+bool GAME_OVER = false;
+
 bool debug = false;
 void openGraphics();
 void drawString(int x, int y, const std::string& str); 
@@ -179,7 +181,6 @@ int main()
 	Alien5.DrawAlien();
 	Alien6.DrawAlien();
 	Alien7.DrawAlien();
-	
 	int playerOp = gfx_wait();
 		
 
@@ -188,9 +189,9 @@ int main()
  *	Looking Good Needs, Game Menu only shows up for 10sec
  *
  **/
-	while(true)
+	while(!GAME_OVER)
 	{
-		if (playerOp == 113)
+		if (playerOp == 113) // quit
 			break;
 		
 		if(BulletNum == 19)

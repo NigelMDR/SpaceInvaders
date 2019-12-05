@@ -65,6 +65,12 @@ class Alien
 		if(!inRange(_X))
 		{
 			_X = 55;
+			_Y += 2*_H;
+		}
+
+		if( _Y > 700 )
+		{
+			GAME_OVER = true;
 		}
 		DrawAlien();
 		
@@ -92,7 +98,7 @@ class Alien
 			return false;
 		return true;
 	}
-/*	
+	
 	void MoveDown()
 	{
 		if( inRange(_Y + SPACE_MOVE) )
@@ -117,7 +123,7 @@ class Alien
 			updateObject();
 		}
 	}
-*/
+
 	void MoveLeft()
 	{
 		if( inRange(_X - SPACE_MOVE) )
