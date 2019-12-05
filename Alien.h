@@ -60,12 +60,21 @@ class Alien
 			// clear();
 			return;
 		}
-		_X += 15;
+		_X += DX;
 		if(!inRange(_X))
 		{
-				
-			_X = 55;
-			_Y += 35;
+			if (_X < 70)	
+			{
+				_X = 70;
+				_Y += 50;
+				DX = -DX;
+			}
+			if (_X > 600)
+			{
+				_X = 600;
+				_Y += 50;
+				DX = -DX;
+			}
 		}
 
 		DrawAlien();
