@@ -60,12 +60,12 @@ class Alien
 			// clear();
 			return;
 		}
-		_X += 35;
+		_X += 15;
 		if(!inRange(_X))
 		{
 				
 			_X = 55;
-			_Y += 15;
+			_Y += 35;
 		}
 
 		DrawAlien();
